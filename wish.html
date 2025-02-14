@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U Wish</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Marck+Script&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Основные стили */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      color: #4a4a4a;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Фиксированный навигационный хедер */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    
+    .site-nav nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .site-nav nav ul li {
+      margin: 0 1rem;
+    }
+    
+    .site-nav nav ul li a {
+      text-decoration: none;
+      color: #ff0066;
+      font-weight: bold;
+    }
+    
+    /* Контейнер для основного контента */
+    .container {
+      max-width: 1200px;
+      margin: 100px auto 0 auto; /* учитываем отступ для фиксированного хедера */
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Шапка с заголовком */
+    header.content-header {
+      text-align: center;
+      padding: 4rem 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+    
+    header.content-header h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 4rem;
+      color: #ff0066;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    header.content-header p {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: #6d6875;
+    }
+    
+    /* Дождь из сердечек */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .heart {
+      position: absolute;
+      background: red;
+      transform: rotate(-45deg);
+      animation: fall linear infinite;
+      /* Размер задается через JS, поэтому для псевдоэлементов используем 100% */
+    }
+    
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      background: red;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    
+    .heart::before {
+      top: -50%;
+      left: 0;
+    }
+    
+    .heart::after {
+      left: 50%;
+      top: 0;
+    }
+    
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+    
+    /* Таймлайн */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px 0;
+    }
+    
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      background-color: #ff0066;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+    
+    .timeline-item {
+      padding: 20px 30px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+    
+    .timeline-item.left {
+      left: 0;
+    }
+    
+    .timeline-item.right {
+      left: 50%;
+    }
+    
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: -10px;
+      background-color: #ff0066;
+      border: 4px solid #fff;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .timeline-item.right::after {
+      left: -10px;
+    }
+    
+    .timeline-content {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    }
+    
+    .timeline-content h2 {
+      font-family: 'Lobster', cursive;
+      font-size: 2rem;
+      color: #ff0066;
+      margin-bottom: 10px;
+    }
+    
+    .timeline-content span {
+      font-family: 'Marck Script', cursive;
+      font-size: 1.2rem;
+      color: #6d6875;
+    }
+    
+    .timeline-content p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    
+    /* Адаптивность для таймлайна */
+    @media screen and (max-width: 768px) {
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        margin-bottom: 20px;
+      }
+      .timeline-item.right {
+        left: 0;
+      }
+      .timeline-item::after {
+        left: 60px;
+      }
+      .timeline::after {
+        left: 60px;
+      }
+    }
+    
+    /* Подвал */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-top: 4rem;
+    }
+    
+    footer p {
+      color: #6d6875;
+    }
+  </style>
+</head>
+<body>
+  <!-- Фиксированный навигационный хедер -->
+  <header class="site-nav">
+    <nav>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="wish.html">U Wish</a></li>
+        <li><a href="#">Photo</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- Дождь из сердечек -->
+  <div class="hearts-container" id="hearts-container"></div>
+  
+  <div class="container">
+    <!-- Шапка с заголовком -->
+    <header class="content-header">
+      <h1>U Wish</h1>
+      <p>Список желаний</p>
+    </header>
+    
+    <!-- Таймлайн -->
+    <section class="timeline">
+      <!-- Элемент таймлайна 1 -->
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h2>Мрия</h2>
+          <span>Март 2025</span>
+          <p>Поехать в «Мрию», чтобы отдохнуть душой и телом: вдохнуть свежий горный воздух, расслабиться в спа, насладиться тишиной и красотой Карпат, забыв о суете.</p>
+        </div>
+      </div>
+      <!-- Элемент таймлайна 2 -->
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h2>Путешествие по домам</h2>
+          <span>Май 2025</span>
+          <p>Поедем к тебе домой, чтобы оживить воспоминания о наших встречах, а потом ко мне — где каждая деталь напомнит о моментах, которые сделали нас ближе.</p>
+        </div>
+      </div>
+      <!-- Элемент таймлайна 3 -->
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h2>Отпуск</h2>
+          <span>Октябрь 2025</span>
+          <p></p>
+        </div>
+      </div>
+      <!-- Элемент таймлайна 4 -->
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <h2>Романтический ужин</h2>
+          <span>Июль 2025</span>
+          <p>Провести вечер при свечах в уютном ресторане с видом на город.</p>
+        </div>
+      </div>
+      <!-- Элемент таймлайна 5 -->
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <h2>Спа-отдых</h2>
+          <span>Сентябрь 2024</span>
+          <p>Расслабиться и насладиться процедурами в одном из лучших спа-центров.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Подвал -->
+  <footer>
+    <p>Сделано с ❤️ для тебя!</p>
+  </footer>
+  
+  <script>
+    // Дождь из сердечек
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const numHearts = 50; // Количество сердечек
+
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Случайная скорость
+        heart.style.animationDelay = Math.random() * 5 + 's'; // Случайная задержка
+        heart.style.opacity = Math.random(); // Случайная прозрачность
+        heart.style.width = heart.style.height = Math.random() * 20 + 10 + 'px'; // Случайный размер
+        container.appendChild(heart);
+      }
+    }
+
+    // Запуск дождя из сердечек после загрузки страницы
+    window.onload = createHearts;
+  </script>
+</body>
+</html>

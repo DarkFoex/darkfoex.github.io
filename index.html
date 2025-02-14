@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>С Днём Святого Валентина! ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Marck+Script&family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Основные стили */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      color: #4a4a4a;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Фиксированный навигационный хедер */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .site-nav nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .site-nav nav ul li {
+      margin: 0 1rem;
+    }
+
+    .site-nav nav ul li a {
+      text-decoration: none;
+      color: #ff0066;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 100px auto 0 auto; /* учтён отступ для фиксированного хедера */
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Шапка */
+    header.content-header {
+      text-align: center;
+      padding: 4rem 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+
+    header.content-header h1 {
+      font-family: 'Lobster', cursive;
+      font-size: 4rem;
+      color: #ff0066;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header.content-header p {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      color: #6d6875;
+    }
+
+    /* Дождь из сердечек */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+  position: absolute;
+  background: red;
+  transform: rotate(-45deg);
+  animation: fall linear infinite;
+  /* Размер задается через JS, поэтому используем 100% для внутренних элементов */
+    }
+
+    .heart::before,
+    .heart::after {
+    content: "";
+    position: absolute;
+    background: red;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    }
+
+    .heart::before {
+    top: -50%;
+    left: 0;
+    }
+
+    .heart::after {
+    left: 50%;
+    top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    /* Основной контент */
+    .main-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-family: 'Marck Script', cursive;
+      font-size: 2rem;
+      color: #ff0066;
+      margin-bottom: 1rem;
+    }
+
+    /* Интерактивный блок */
+    .interactive-block {
+      text-align: center;
+      padding: 4rem 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .heart-btn {
+      background: #ff0066;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255,0,102,0.3);
+    }
+
+    .heart-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(255,0,102,0.4);
+    }
+
+    .hidden-content {
+      display: none;
+      margin-top: 2rem;
+      animation: fadeIn 1s ease;
+    }
+
+    .hidden-content img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #ff0066;
+      margin-bottom: 1rem;
+    }
+
+    .hidden-content p {
+      font-size: 1.8rem;
+      color: #ff0066;
+      margin: 0;
+      font-family: 'Marck Script', cursive;
+    }
+
+    /* Подвал */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      color: #6d6875;
+    }
+
+    /* Анимации */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      header.content-header h1 {
+        font-size: 3rem;
+      }
+      
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Фиксированный навигационный хедер -->
+  <header class="site-nav">
+    <nav>
+      <ul>
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="wish.html">U wish</a></li>
+        <li><a href="#">Photo</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Дождь из сердечек -->
+  <div class="hearts-container" id="hearts-container"></div>
+
+  <div class="container">
+    <!-- Шапка с поздравлением -->
+    <header class="content-header">
+      <h1>С Днём Святого Валентина!</h1>
+      <p>Поздравляем с праздником любви и романтики!</p>
+    </header>
+
+    <!-- Основной контент -->
+    <section class="main-content">
+      <div class="card">
+        <img src="png/1.jpg">
+        <h3>U</h3>
+        <p>Пусть каждый день дарит тебе вдохновение, радость и новые победы! Ты – самая красивая и удивительная девушка, сияющая добротой, умом и обаянием. Будь счастлива всегда!</p>
+      </div>
+      <div class="card">
+        <img src="png/2.jpg">
+        <h3>Are</h3>
+        <p>Пусть каждый день наполняется радостью, улыбками и вдохновением! Ты – волшебная, очаровательная девушка, чья красота и доброта озаряют мир. Пусть мечты сбываются!</p>
+      </div>
+      <div class="card">
+        <img src="png/3.jpg">
+        <h3>Mine</h3>
+        <p>Каждый миг пусть будет полон нежности, смеха и успехов! Ты – самая прекрасная и удивительная девушка, дарящая свет и тепло окружающим. Оставайся такой же волшебной!</p>
+      </div>
+    </section>
+
+    <!-- Интерактивный блок -->
+    <section class="interactive-block">
+      <button class="heart-btn">Нажми меня!</button>
+      <div class="hidden-content">
+        <img src="png/4.jpg">
+        <p>Ты самая красивая! ❤️</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Подвал -->
+  <footer>
+    <p>Сделано с ❤️ для тебя!</p>
+  </footer>
+
+  <script>
+    // Дождь из сердечек
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const numHearts = 50; // Количество сердечек
+
+      for (let i = 0; i < numHearts; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Случайная скорость
+        heart.style.animationDelay = Math.random() * 5 + 's'; // Случайная задержка
+        heart.style.opacity = Math.random(); // Случайная прозрачность
+        heart.style.width = heart.style.height = Math.random() * 20 + 10 + 'px'; // Случайный размер
+        container.appendChild(heart);
+      }
+    }
+
+    // Интерактивный блок
+    const heartBtn = document.querySelector('.heart-btn');
+    const hiddenContent = document.querySelector('.hidden-content');
+
+    heartBtn.addEventListener('click', () => {
+      // Анимация кнопки
+      heartBtn.style.animation = 'float 0.5s ease';
+      setTimeout(() => {
+        heartBtn.style.animation = '';
+      }, 500);
+
+      // Показ скрытого контента
+      hiddenContent.style.display = 'block';
+    });
+
+    // Запуск дождя из сердечек
+    window.onload = createHearts;
+  </script>
+</body>
+</html>
